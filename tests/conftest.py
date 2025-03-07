@@ -1,15 +1,13 @@
 import pytest
-from app.database import Base, engine
-from app.main import app
 from fastapi.testclient import TestClient
 
-@pytest.fixture(scope='session')
-def test_db():
-    Base.metadata.create_all(bind=engine)
-    yield
-    Base.metadata.drop_all(bind=engine)
+from app.main import app
+from app.database import Base, engine
 
-@pytest.fixture
-def client(test_db):
+
+@pytest.fixture(scope='module')
+def test_client():
+    Base.metadata.create_all(bind=engine)
     with TestClient(app) as client:
         yield client
+    Base.metadata.drop_all(bind=engine)

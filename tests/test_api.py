@@ -1,7 +1,9 @@
+import pytest
+
 from fastapi.testclient import TestClient
 from app.main import app
 from app.database import SessionLocal, Base, engine
-import pytest
+
 
 @pytest.fixture(scope='module')
 def test_db():
@@ -11,10 +13,12 @@ def test_db():
     db.close()
     Base.metadata.drop_all(bind=engine)
 
+
 @pytest.fixture
 def client():
     with TestClient(app) as c:
         yield c
+
 
 def test_create_project(client):
     response = client.post('/projects/', json={
@@ -26,6 +30,7 @@ def test_create_project(client):
     assert data['project_name'] == 'Office Building'
     assert len(data['tasks']) > 0
     assert data['status'] == 'processing'
+
 
 def test_get_project(client, test_db):
     # First create a project

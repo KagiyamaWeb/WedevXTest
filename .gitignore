@@ -1,2 +1,25 @@
 .env
 .windsurfrules
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environments
+.venv/
+
+# Database
+*.db
+*.sqlite
+
+# Testing
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

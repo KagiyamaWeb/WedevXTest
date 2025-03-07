@@ -1,19 +1,77 @@
 # AI-Powered Construction Task Manager
 
-## Setup
-1. Create `.env` file with your Gemini API key:
+## Features
+- Dynamic task generation using Gemini Pro
+- Project lifecycle management
+- Automatic task progression simulation
+- SQLite database storage
+
+## System Architecture
 ```
-GEMINI_API_KEY=your_api_key_here
-```
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-3. Run the API:
-```bash
-uvicorn app.main:app --reload
+┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+│   FastAPI     │◄─────►│  SQLAlchemy   │◄─────►│  SQLite DB    │
+│   Endpoints   │       │    ORM        │       │               │
+└───────────────┘       └───────────────┘       └───────────────┘
+       ▲
+       │
+       ▼
+┌───────────────┐
+│ Gemini Pro API│
+└───────────────┘
+
+## API Documentation
+
+### Create Project
+```http
+POST /projects/
+Content-Type: application/json
+
+{
+  "project_name": "Hospital",
+  "location": "New York"
+}
 ```
 
-## API Endpoints
-- POST `/projects/` - Create new project
-- GET `/projects/{project_id}` - Get project details
+Response:
+```json
+{
+  "id": 1,
+  "project_name": "Hospital",
+  "location": "New York",
+  "status": "processing",
+  "tasks": [
+    {"name": "Site Survey", "status": "pending"},
+    {"name": "Permit Acquisition", "status": "pending"}
+  ]
+}
+```
+
+### Get Project Status
+```http
+GET /projects/1
+```
+
+Response:
+```json
+{
+  "id": 1,
+  "project_name": "Hospital",
+  "location": "New York",
+  "status": "in_progress",
+  "tasks": [
+    {"name": "Site Survey", "status": "completed"},
+    {"name": "Permit Acquisition", "status": "pending"}
+  ]
+}
+```
+
+## Development Setup
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run with hot reload
+uvicorn app.main:app --reload
+
+# Run tests
+pytest tests/
