@@ -1,16 +1,16 @@
 import os
 import asyncio
+import logging
+
 import google.generativeai as genai
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
 from app.database import get_db, SessionLocal
 from app import models
-import logging
+
 
 load_dotenv()
-
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 DEFAULT_FALLBACK_TASKS = [{'name': 'Unknown', 'status': models.TaskStatus.PENDING}]  # Define default fallback tasks

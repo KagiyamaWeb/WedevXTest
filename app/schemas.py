@@ -1,8 +1,8 @@
 from typing import List
 
-from pydantic import BaseModel, constr, validator
+from pydantic import BaseModel
 from datetime import datetime
-from app.models import Project, Task, ProjectStatus, TaskStatus
+from app.models import ProjectStatus, TaskStatus
 
 
 class TaskBase(BaseModel):
