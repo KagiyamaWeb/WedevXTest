@@ -18,6 +18,7 @@
 ┌───────────────┐
 │ Gemini Pro API│
 └───────────────┘
+```
 
 ## API Documentation
 
